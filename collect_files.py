@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 import os
 import sys
 import shutil
@@ -18,7 +17,6 @@ def collect_files(input_dir, output_dir, max_depth=None):
         rel_path = os.path.relpath(root, input_dir)
         rel_parts = [] if rel_path == '.' else rel_path.split(os.sep)
 
-        # "Срезаем" глубину, если превышает max_depth
         if max_depth is not None and len(rel_parts) >= max_depth:
             new_rel_parts = rel_parts[-max_depth:]
         else:
@@ -31,7 +29,6 @@ def collect_files(input_dir, output_dir, max_depth=None):
             src_path = os.path.join(root, file)
             dst_path = os.path.join(target_root, file)
 
-            # Если файл уже существует, добавляем суффикс
             if os.path.exists(dst_path):
                 base, ext = os.path.splitext(file)
                 count = name_counts.get(file, 1)
@@ -49,9 +46,6 @@ def collect_files(input_dir, output_dir, max_depth=None):
             shutil.copyfile(src_path, dst_path)
 
 if __name__ == "__main__":
-    if len(sys.argv) < 3:
-        print("Usage: collect_files.py <input_dir> <output_dir> [--max_depth N]")
-        sys.exit(1)
 
     input_dir = sys.argv[1]
     output_dir = sys.argv[2]
